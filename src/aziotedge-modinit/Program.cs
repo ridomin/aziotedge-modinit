@@ -21,7 +21,6 @@ internal class Program
         if (!map.TryGetValue("DeviceId", out string? deviceId)) PrintUsageAndExit("DeviceId");        
         if (!map.TryGetValue("SharedAccessKey", out string? sasKey)) PrintUsageAndExit("SharedAccessKey");
         string modId = configuration.GetValue<string>("moduleId")!;
-
         if (string.IsNullOrEmpty(hostname) 
             || string.IsNullOrEmpty(deviceId) 
             || string.IsNullOrEmpty(sasKey) 
@@ -58,7 +57,8 @@ internal class Program
         if (!respPut.IsSuccessStatusCode)
         {
             if (respPut.StatusCode == HttpStatusCode.Conflict) 
-            { 
+            {
+                await Console.Out.WriteLineAsync($"Module {moduleId} exists.");
                 await InitModuleAsync(hostname, edgeId, sasKey, moduleId, true);
             }
             else
