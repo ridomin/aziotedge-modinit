@@ -1,5 +1,8 @@
 ﻿# Azure IoT Edge Module Initializer 
 
+[![NuGet](https://img.shields.io/nuget/v/aziotedge-modinit.svg)](https://www.nuget.org/packages/aziotedge-modinit)
+
+
 dotnet tool to initialize Azure IoT Edge modules in Azure IoT Hub.
 
 ## Installation
