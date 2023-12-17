@@ -15,42 +15,21 @@ internal class Program
 
         string connectionString = configuration.GetConnectionString("IoTEdge")!;
 
-        if (string.IsNullOrEmpty(connectionString))
-        {
-            PrintUsageAndExit("ConnectionString:IoTEdge");
-        }
-
+        if (string.IsNullOrEmpty(connectionString)) PrintUsageAndExit("ConnectionString:IoTEdge");
         IDictionary<string, string> map = connectionString.ToDictionary(';', '=');
-
-        if (!map.TryGetValue("HostName", out string? hostname))
-        {
-            PrintUsageAndExit("HostName");
-        }
-
-        if (!map.TryGetValue("DeviceId", out string? deviceId)) 
-        {
-            PrintUsageAndExit("DeviceId");        
-        }
-
-        if (!map.TryGetValue("SharedAccessKey", out string? sasKey))
-        {
-            PrintUsageAndExit("SharedAccessKey");
-        }
-                
+        if (!map.TryGetValue("HostName", out string? hostname)) PrintUsageAndExit("HostName");
+        if (!map.TryGetValue("DeviceId", out string? deviceId)) PrintUsageAndExit("DeviceId");        
+        if (!map.TryGetValue("SharedAccessKey", out string? sasKey)) PrintUsageAndExit("SharedAccessKey");
         string modId = configuration.GetValue<string>("moduleId")!;
 
-        if (string.IsNullOrEmpty(hostname) || string.IsNullOrEmpty(deviceId) || string.IsNullOrEmpty(sasKey) || string.IsNullOrEmpty(modId))
-        {
-            PrintUsageAndExit("empty connection string values");
-        }
-        else
-        {
-
-            await InitModule(hostname, deviceId, sasKey, modId, modId.StartsWith('$'));
-        }
+        if (string.IsNullOrEmpty(hostname) 
+            || string.IsNullOrEmpty(deviceId) 
+            || string.IsNullOrEmpty(sasKey) 
+            || string.IsNullOrEmpty(modId)) PrintUsageAndExit("empty connection string values");
+        else await InitModuleAsync(hostname, deviceId, sasKey, modId, modId.StartsWith('$'));
     }
 
-    private static async Task InitModule(string hostname, string edgeId, string sasKey, string moduleId, bool withEtag = false)
+    private static async Task InitModuleAsync(string hostname, string edgeId, string sasKey, string moduleId, bool withEtag = false)
     {
         const string Api_Version_2021_04_12 = "api-version=2021-04-12";
 
@@ -80,7 +59,7 @@ internal class Program
         {
             if (respPut.StatusCode == HttpStatusCode.Conflict) 
             { 
-                await InitModule(hostname, edgeId, sasKey, moduleId, true);
+                await InitModuleAsync(hostname, edgeId, sasKey, moduleId, true);
             }
             else
             {

@@ -10,10 +10,20 @@
 	<PropertyGroup>
 		<PackAsTool>true</PackAsTool>
 		<ToolCommandName>aziotedge-modinit</ToolCommandName>
-		<Title>Init Azure IoTEdge Modules</Title>
+		<Title>Azure IoTEdge Modules Init Tool</Title>
 		<Description>A tool to initialize IoTEdge modules using the IoTEdge device identity.</Description>
 		<Copyright>copyleft</Copyright>
+		<PackageProjectUrl>https://github.com/ridomin/aziotedge-modinit</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/ridomin/aziotedge-modinit</RepositoryUrl>
+		<PackageTags>iothub; iotedge; azureiot</PackageTags>
 	</PropertyGroup>
+	<ItemGroup>
+	  <None Include="..\..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
 	</ItemGroup>
